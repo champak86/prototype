@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<style>
+    .login-admin-panel-wrapper {
+        box-shadow: 1px 0px 6px 8px #e8e8e8;
+        padding: 30px 40px;
+        margin: 70px auto 0;
+        width: 60%;
+    }
+    .login-admin-panel-wrapper .title {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    .login-admin-panel-wrapper .common-input-field {
+        margin-bottom: 30px;
+    }
+    .login-admin-panel-wrapper .common-input-field label {
+        display: flex;
+        margin-left: 15px;
+    }
+    .login-admin-panel-wrapper .common-input-field input {
+        border: solid 1px #e3e3e3;
+        height: 50px;
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: 400;
+        font-family: "Gellix";
+        color: #000000;
+        letter-spacing: 0.4px;
+        opacity: 0.8;
+        border-radius: 30px;
+    }
+    .login-admin-panel-wrapper .common-input-field input.form-control {
+        background-color: #ffffff;
+    }
+    .login-admin-panel-wrapper button {
+        background-color: #80bdff;
+        border: none;
+        display: flex;
+        width: 50%;
+        max-width: 100%;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        height: 45px;
+        border-radius: 30px;
+        font-weight: 500;
+        font-family: "Gellix";
+        font-size: 18px;
+        margin-bottom: 0;
+        margin: 0 auto;
+    }
+    .login-admin-panel-wrapper .admin-logo {
+        width: 98px;
+        margin-bottom: 20px;
+    }
+</style>
+<div class="container">
+    <div class="login-admin-panel-wrapper text-center">
+        <form method="post">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="mb-3">
+                    You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% endif %}
+            <h1 class="h3 mb-5 title">Please sign in</h1>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="common-input-field">
+                        <label for="inputUsername">Username</label>
+                        <input type="text" value="{{ last_username }}" name="username" id="inputUsername"
+                               class="form-control" required autofocus>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="common-input-field">
+                        <label for="inputPassword">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" required>
+                    </div>
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
+                </div>
+                <div class="col-md-12">
+                    <div class="common-input-field mb-0">
+                        <button class="btn btn-lg btn-primary" type="submit">
+                            Sign in
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            {#
+                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                See https://symfony.com/doc/current/security/remember_me.html
+
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" name="_remember_me"> Remember me
+                    </label>
+                </div>
+            #}
+        </form>
+    </div>
+</div>
+{% endblock %}
